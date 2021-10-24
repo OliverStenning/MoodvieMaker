@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 
 from cv2 import TERM_CRITERIA_EPS, TERM_CRITERIA_MAX_ITER, KMEANS_RANDOM_CENTERS, kmeans
 from PIL import Image
@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def get_average_colors(image: Image) -> Tuple[int, int, int]:
+def get_average_colors(image: Image) -> List[int, int, int]:
     pixel_values = list(image.getdata())
 
     rgb = [0, 0, 0]
