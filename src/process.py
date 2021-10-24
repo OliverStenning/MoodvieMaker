@@ -1,26 +1,23 @@
 import cv2
 from PIL import Image
+from typing import Tuple
 
-def get_average_colors(image: Image):
-    w, h = image.size
+def get_average_colors(image: Image) -> Tuple[int, int, int]:
+
     pixel_values = list(image.getdata())
 
-    r = 0
-    g = 0
-    b = 0
+    rgb = (0, 0, 0)
 
     for pixel in pixel_values:
-        r += pixel[0]
-        g += pixel[1]
-        b += pixel[2]
+        for i in range(3):
+            rgb[i] += pixel[i]
 
     pixels_num = len(pixel_values)
 
-    r = r / pixels_num
-    g = g / pixels_num
-    b = b / pixels_num
+    for i in range(3):
+        rgb[i] /= pixels_num
 
-    return (r, g, b)
+    return rgb
 
 # Sauce: https://stackoverflow.com/a/48602446/4752388
 def opencv_image_to_pillow_image(opencv_image) -> Image:
