@@ -1,18 +1,5 @@
 import os
-import sys
-
 import cv2
-
-def start():
-    num_args = len(sys.argv)
-    if num_args != 3:
-        raise Exception(
-            f"Found {num_args} args - expected 3: COMMAND <video name> <video path>"
-        )
-
-    _, name, path = sys.argv
-    read_frames(name, path)
-
 
 def read_frames(name, path):
     # Opens the Video file
@@ -51,7 +38,3 @@ def read_frames(name, path):
     print("Done!")
     video.release()
     cv2.destroyAllWindows()
-
-
-start()
- 
