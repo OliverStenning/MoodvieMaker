@@ -16,17 +16,15 @@ if __name__ == "__main__":
         )
 
     _, name, path = sys.argv
-    frames = read.read_frames(path, 60*24)
+    frames = read.read_frames(path, 3000*24)
     print(f"Found {len(frames)} video frames")
 
     avg_colors: List[np.ndarray] = []
-    dom_colors: List[np.ndarray] = []
     for i in range(len(frames)):
         avg_colors.append(get_average_color_numpy(frames[i]).astype(int))
-        dom_colors.append(get_average_colors(frames[i]).astype(int))
         print(i)
         
 
-    create_svg(avg_colors, dom_colors)
+    create_svg(avg_colors, name)
 
     print("Done!")
