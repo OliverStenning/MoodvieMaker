@@ -1,10 +1,11 @@
-import os
+from PIL import Image
 import cv2
 
-def read_frames(name, path):
-    # Opens the Video file
-    # Sauce: https://learnopencv.com/reading-and-writing-videos-using-opencv/#read-video-from-file
-    video = cv2.VideoCapture(path)
+# Sauce: https://learnopencv.com/reading-and-writing-videos-using-opencv/#read-video-from-file
+def read_frames(video_path, limit):
+    name = video_path.split("/").pop()
+
+    video = cv2.VideoCapture(video_path)
     time = 0
 
     if video.isOpened() is False:
@@ -18,23 +19,29 @@ def read_frames(name, path):
     }
     print(f"Found video {name} with stats:", stats)
 
-    print("Creating folder")
-    if not os.path.exists(name):
-        os.makedirs(name)
-
     print("Reading video")
+    frames = []
+
     while video.isOpened():
         ret, frame = video.read()
-        if ret == False:
+        if ret == False or time >= limit:
             break
 
         if time == 0:
             print("Found first frame")
 
-        image_path = f"{name}/frame-{str(time)}.jpg"
-        # cv2.imwrite(image_path, frame)
+        # frames.append(opencv_image_to_pillow_image(frame))
+        frames.append(frame)
         time += 1
 
-    print("Done!")
     video.release()
     cv2.destroyAllWindows()
+
+    return frames
+
+# Sauce: https://stackoverflow.com/a/48602446/4752388
+def opencv_image_to_pillow_image(opencv_image) -> Image:
+    rgb_image = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2RGB)
+    pil_image = Image.fromarray(rgb_image)
+
+    return pil_image
