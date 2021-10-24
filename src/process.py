@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List
 
 from cv2 import TERM_CRITERIA_EPS, TERM_CRITERIA_MAX_ITER, KMEANS_RANDOM_CENTERS, COLOR_BGR2RGB, cvtColor, kmeans
 from PIL import Image
@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def get_average_colors(opencv_image) -> Tuple[int, int, int]:
+def get_average_colors(opencv_image) -> np.ndarray:
     image = opencv_image_to_pillow_image(opencv_image)
     pixel_values = list(image.getdata())
 
