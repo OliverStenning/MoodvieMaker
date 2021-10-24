@@ -20,8 +20,9 @@ if __name__ == "__main__":
     print(f"Found {len(frames)} video frames")
 
     colors: List[np.ndarray] = []
-    for frame in frames:
-        colors.append(get_dominant_color(frame).astype(int))
+    for i in range(len(frames)):
+        colors.append(get_dominant_color(frames[i]).astype(int))
+        print(i)
 
     create_svg(colors)
 
