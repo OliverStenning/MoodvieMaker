@@ -1,8 +1,12 @@
 import sys
+from typing import List
+
+import numpy as np
 
 import read
-import process
-import save
+from process import get_dominant_color
+from save import create_svg
+
 
 if __name__ == "__main__":
     num_args = len(sys.argv)
@@ -12,4 +16,13 @@ if __name__ == "__main__":
         )
 
     _, name, path = sys.argv
-    read.read_frames(name, path)
+    frames = read.read_frames(path, 300)
+    print(f"Found {len(frames)} video frames")
+
+    colors: List[np.ndarray] = []
+    for frame in frames:
+        colors.append(get_dominant_color(frame).astype(int))
+
+    create_svg(colors)
+
+    print("Done!")
