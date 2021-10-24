@@ -28,8 +28,8 @@ def read_frames(video_path, limit):
         if ret == False or time >= limit:
             break
 
-        one_frame_per_second = time % rounded_fps == 0
-        if (one_frame_per_second):
+        is_first_frame_of_current_second = (time % rounded_fps) == 0
+        if is_first_frame_of_current_second:
             frames.append(frame)
 
         time += 1
@@ -39,9 +39,4 @@ def read_frames(video_path, limit):
 
     return frames
 
-# Sauce: https://stackoverflow.com/a/48602446/4752388
-def opencv_image_to_pillow_image(opencv_image) -> Image:
-    rgb_image = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2RGB)
-    pil_image = Image.fromarray(rgb_image)
 
-    return pil_image

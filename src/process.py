@@ -1,15 +1,16 @@
 from typing import Tuple
 
-from cv2 import TERM_CRITERIA_EPS, TERM_CRITERIA_MAX_ITER, KMEANS_RANDOM_CENTERS, kmeans
+from cv2 import TERM_CRITERIA_EPS, TERM_CRITERIA_MAX_ITER, KMEANS_RANDOM_CENTERS, COLOR_BGR2RGB, cvtColor, kmeans
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
 
 
-def get_average_colors(image: Image) -> Tuple[int, int, int]:
+def get_average_colors(opencv_image) -> Tuple[int, int, int]:
+    image = opencv_image_to_pillow_image(opencv_image)
     pixel_values = list(image.getdata())
 
-    rgb = [0, 0, 0]
+    rgb = np.array([0, 0, 0])
 
     for pixel in pixel_values:
         for i in range(3):
@@ -68,3 +69,10 @@ def show_average_and_dominant_colors(opencv_image):
     ax1.set_title('Dominant colors')
     ax1.axis('off')
     plt.show()
+
+# Sauce: https://stackoverflow.com/a/48602446/4752388
+def opencv_image_to_pillow_image(opencv_image) -> Image:
+    rgb_image = cvtColor(opencv_image, COLOR_BGR2RGB)
+    pil_image = Image.fromarray(rgb_image)
+
+    return pil_image
