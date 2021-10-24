@@ -130,3 +130,5 @@ dmypy.json
 
 *.jpg
 *.mp4
+
+.DS_Store
