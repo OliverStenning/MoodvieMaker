@@ -20,6 +20,7 @@ def read_frames(video_path, limit):
     print(f"Found video {name} with stats:", stats)
 
     print("Reading video")
+    rounded_fps = round(stats["fps"])
     frames = []
 
     while video.isOpened():
@@ -27,11 +28,10 @@ def read_frames(video_path, limit):
         if ret == False or time >= limit:
             break
 
-        if time == 0:
-            print("Found first frame")
+        one_frame_per_second = time % rounded_fps == 0
+        if (one_frame_per_second):
+            frames.append(frame)
 
-        # frames.append(opencv_image_to_pillow_image(frame))
-        frames.append(frame)
         time += 1
 
     video.release()
